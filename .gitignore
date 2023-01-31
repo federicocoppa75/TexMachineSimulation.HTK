@@ -16,3 +16,6 @@ packages/
 
 #database file
 *.db
+
+# Tex comunication library
+Comunication library/
