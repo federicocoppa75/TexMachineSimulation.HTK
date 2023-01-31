@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FC75.Machine.3D.Views" Version="2.7.0" />
+    <PackageReference Include="FC75.Machine.DataSource.File.Json" Version="2.7.0" />
+    <PackageReference Include="FC75.Machine.Steps.ViewModels.Extensions" Version="2.7.0" />
+    <PackageReference Include="FC75.Machine.Views" Version="2.7.0" />
+    <PackageReference Include="FC75.MaterialRemove.Machine.Bridge" Version="2.7.0" />
+    <PackageReference Include="FC75.MaterialRemove.ViewModels.3D" Version="2.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CncViewer.Connection.Bridge\CncViewer.Connection.Bridge.csproj" />
+    <ProjectReference Include="..\CncViewer.Connection.DataSource.File.Xml\CncViewer.Connection.DataSource.File.Xml.csproj" />
+    <ProjectReference Include="..\CncViewer.Connection.Views\CncViewer.Connection.Views.csproj" />
+    <ProjectReference Include="..\CncViewer.Connection\CncViewer.Connection.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+</Project>

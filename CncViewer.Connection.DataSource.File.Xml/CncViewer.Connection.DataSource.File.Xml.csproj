@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FC75.Machine.ViewModels.Base" Version="2.7.0" />
+    <PackageReference Include="FC75.Machine.ViewModels.Messages" Version="2.7.0" />
+    <PackageReference Include="FC75.Machine.ViewModels.Messaging" Version="2.7.0" />
+    <PackageReference Include="FC75.Machine.ViewModels.UI" Version="2.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CncViewer.Connection\CncViewer.Connection.csproj" />
+    <ProjectReference Include="..\CncViewer.Models\CncViewer.Models.csproj" />
+  </ItemGroup>
+
+</Project>

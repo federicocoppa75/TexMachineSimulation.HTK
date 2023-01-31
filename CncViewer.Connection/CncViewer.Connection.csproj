@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FC75.Machine.ViewModels.Base" Version="2.7.0" />
+    <PackageReference Include="FC75.Machine.ViewModels.Interfaces" Version="2.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CncViewer.Connection.Interfaces\CncViewer.Connection.Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>

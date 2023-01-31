@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FC75.Machine.ViewModels.UI" Version="2.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CncViewer.Connection\CncViewer.Connection.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="TexControllers">
+      <HintPath>Comunication library\TexControllers.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
