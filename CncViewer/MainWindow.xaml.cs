@@ -34,6 +34,10 @@ namespace CncViewer
 
         protected override void OnClosing(CancelEventArgs e)
         {
+            var cmd = (DataContext as MainViewModel).ConnectionManager.DisconnectCommand;
+
+            if ((cmd != null) && cmd.CanExecute(null)) cmd.Execute(null);
+
             base.OnClosing(e);
 
             SaveToSettings();
