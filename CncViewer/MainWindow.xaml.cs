@@ -63,6 +63,8 @@ namespace CncViewer
             Properties.Settings.Default.PanelFragmentType = vm.MaterialRemoveData.PanelFragment.ToString();
             Properties.Settings.Default.SectionDivision = vm.MaterialRemoveData.SectionDivision.ToString();
             Properties.Settings.Default.DynamicTransition = vm.LinkMovementController.Enable;
+            Properties.Settings.Default.IpAddress = vm.ConnectionManager.IpAddress;
+            Properties.Settings.Default.SampleTime= vm.ConnectionManager.SampleTime;
         }
 
         private void UpdateFromSettings()
@@ -84,6 +86,8 @@ namespace CncViewer
             vm.PanelFragmentOptions.TryToParse(Properties.Settings.Default.PanelFragmentType);
             vm.SectionDivisionOptions.TryToParse(Properties.Settings.Default.SectionDivision);
             vm.LinkMovementController.Enable = Properties.Settings.Default.DynamicTransition;
+            vm.ConnectionManager.IpAddress = Properties.Settings.Default.IpAddress;
+            vm.ConnectionManager.SampleTime = Properties.Settings.Default.SampleTime;
         }
 
     }

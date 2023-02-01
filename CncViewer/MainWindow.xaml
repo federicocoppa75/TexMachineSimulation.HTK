@@ -165,6 +165,13 @@
                     <Separator/>
                     <MenuItem Header="Connect" Command="{Binding ConnectionManager.ConnectCommand}"/>
                     <MenuItem Header="Disconnect" Command="{Binding ConnectionManager.DisconnectCommand}"/>
+                    <Separator/>
+                    <MenuItem Header="IP address">
+                        <TextBox Text="{Binding ConnectionManager.IpAddress}"/>
+                    </MenuItem>
+                    <MenuItem Header="Sample time">
+                        <TextBox Text="{Binding ConnectionManager.SampleTime}"/>
+                    </MenuItem>
                 </MenuItem>
                 <MenuItem Header="Movements">
                     <MenuItem Header="Dynamic transition" IsCheckable="True" IsChecked="{Binding LinkMovementController.Enable}"/>

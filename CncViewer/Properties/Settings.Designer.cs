@@ -226,5 +226,29 @@ namespace CncViewer.Properties {
                 this["DynamicTransition"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("192.168.0.200")]
+        public string IpAddress {
+            get {
+                return ((string)(this["IpAddress"]));
+            }
+            set {
+                this["IpAddress"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("300")]
+        public int SampleTime {
+            get {
+                return ((int)(this["SampleTime"]));
+            }
+            set {
+                this["SampleTime"] = value;
+            }
+        }
     }
 }

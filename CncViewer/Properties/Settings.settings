@@ -111,5 +111,11 @@
     <Setting Name="DynamicTransition" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="IpAddress" Type="System.String" Scope="User">
+      <Value Profile="(Default)">192.168.0.200</Value>
+    </Setting>
+    <Setting Name="SampleTime" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">300</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
