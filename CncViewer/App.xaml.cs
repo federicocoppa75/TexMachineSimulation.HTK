@@ -75,12 +75,14 @@ namespace CncViewer
             MVMIoc.SimpleIoc<MVMUI.IExceptionObserver>.Register<MVUI.SimpleExceptionObserver>();
             MVMIoc.SimpleIoc<MRI.IPanelExportController>.Register<MRMB.PanelExportController>();
             MVMIoc.SimpleIoc<CVCI.IDataSource>.Register<CVCDSFX.DataSource>();
-            var connViewMode = new CVCB.ConnectionViewModel();
+            //var connViewMode = new CVCB.ConnectionViewModel();
+            var connViewMode = new CVCB.ConnectionViewModelEx();
             MVMIoc.SimpleIoc<CVCI.IConnectionData>.Register(connViewMode);
             MVMIoc.SimpleIoc<CVCI.IConnectionManager>.Register(connViewMode);
             //MVMIoc.SimpleIoc<MVMI.IProcessCaller>.Register<CVC.TimedProcessCaller>("TEX");
             //MVMIoc.SimpleIoc<MVMI.Links.ILinkMovementManager>.Register<CVC.LinkMovementManagerDummy>();
             MVMIoc.SimpleIoc<MVMI.IProgressState>.Register<CVC.DummyProgressState>();
+            MVMIoc.SimpleIoc<CVCI.IVariableViewModelFacotry>.Register<CVCB.Factories.VariableViewModelFacotry>();
         }
     }
 }

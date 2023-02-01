@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CncViewer.Connection.Interfaces.Links;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using MVMIL = Machine.ViewModels.Interfaces.Links;

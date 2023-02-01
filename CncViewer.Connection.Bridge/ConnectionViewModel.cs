@@ -25,7 +25,7 @@ namespace CncViewer.Connection.Bridge
         private bool _firstRead;
         private bool _stopRequested;
 
-        private GTCI.IController _controller;
+        protected GTCI.IController _controller;
 
         public int SampleTime { get; set; } = 300;
         public string IpAddress { get; set; } = "192.168.0.200";
@@ -136,7 +136,7 @@ namespace CncViewer.Connection.Bridge
             }
         }
 
-        private void ReadVariables()
+        protected virtual void ReadVariables()
         {
             foreach (var variable in Variables)
             {

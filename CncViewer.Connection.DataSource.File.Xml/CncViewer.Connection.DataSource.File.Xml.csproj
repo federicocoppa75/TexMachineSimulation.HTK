@@ -7,13 +7,11 @@
 
   <ItemGroup>
     <PackageReference Include="FC75.Machine.ViewModels.Base" Version="2.7.0" />
-    <PackageReference Include="FC75.Machine.ViewModels.Messages" Version="2.7.0" />
-    <PackageReference Include="FC75.Machine.ViewModels.Messaging" Version="2.7.0" />
     <PackageReference Include="FC75.Machine.ViewModels.UI" Version="2.7.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CncViewer.Connection\CncViewer.Connection.csproj" />
+    <ProjectReference Include="..\CncViewer.Connection.Interfaces\CncViewer.Connection.Interfaces.csproj" />
     <ProjectReference Include="..\CncViewer.Models\CncViewer.Models.csproj" />
   </ItemGroup>
 

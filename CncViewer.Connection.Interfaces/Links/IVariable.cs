@@ -15,7 +15,7 @@ namespace CncViewer.Connection.Interfaces.Links
         void SetValue<V>(V value);
     }
 
-    public interface IVariable<T>
+    public interface IVariable<T> : IVariable
     {
         T Value { get; set; }
     }

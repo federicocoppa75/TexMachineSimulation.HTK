@@ -19,46 +19,7 @@ namespace CncViewer.Connection.ViewModels.Links
         public abstract void SetValue<V>(V value);
     }
 
-    //public abstract class VariableViewModel<T, TLink> : VariableViewModel, IVariable<T> where TLink : class, MVMIL.ILinkViewModel
-    //{
-    //    private T _value = default(T);
-    //    public T Value 
-    //    { 
-    //        get => _value;
-    //        set
-    //        {
-    //            if(Set(ref _value, value, nameof(Value)))
-    //            {
-    //                OnValueChanged();
-    //            }
-    //        }
-    //    }
-
-    //    protected TLink _link;
-    //    public override ILinkViewModel Link 
-    //    { 
-    //        get => _link;
-    //        set
-    //        {
-    //            if(value == null) 
-    //            {
-    //                _link = null;
-    //            }
-    //            else if(value is TLink v)
-    //            {
-    //                Set(ref _link, v, nameof(Link));
-    //            }
-    //            else
-    //            {
-    //                throw new InvalidOperationException($"You can not couple {typeof(T).Name} with {typeof(TLink).Name}!");
-    //            }
-    //        }
-    //    }
-
-    //    protected abstract void OnValueChanged();
-    //}
-
-    public abstract class VariableViewModel<T> : VariableViewModel, IVariable<T> 
+    public abstract class VariableViewModel<T> : VariableViewModel, IVariable<T>
     {
         private T _value = default(T);
         public T Value
@@ -79,7 +40,7 @@ namespace CncViewer.Connection.ViewModels.Links
             {
                 (this as VariableViewModel<V>).Value = value;
             }
-            else if(value is T tValue)
+            else if (value is T tValue)
             {
                 Value = tValue;
             }
