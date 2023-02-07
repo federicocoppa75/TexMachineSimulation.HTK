@@ -1,27 +1,14 @@
 ﻿using CncViewer.ConfigEditor.ViewModels.Enums;
+using CncViewer.ConfigEditor.ViewModels.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace CncViewer.ConfigEditor.ViewModels.Links
 {
-    public class LinearLinkViewModel : LinkViewModel
+    public class LinearLinkViewModel : LinkViewModel<LinearLinkTarget>, ILinearLinkViewModel
     {
-        private LinearLinkTarget _linearTargetType;
-        public LinearLinkTarget LinearTargetType
-        {
-            get => _linearTargetType;
-            set
-            {
-                if(Set(ref _linearTargetType, value, nameof(LinearTargetType)))
-                {
-                    RisePropertyChanged(nameof(TargetType));
-                }
-            }
-        }
-
-
-        public override TargetType TargetType => (_linearTargetType == LinearLinkTarget.DWord) ? TargetType.DWord : TargetType.Word;
+        public override TargetType TargetType => (SelectableType == LinearLinkTarget.DWord) ? TargetType.DWord : TargetType.Word;
 
         private double _factor = 1.0;
         public double Factor

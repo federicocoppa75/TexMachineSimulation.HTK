@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using CVCEVM = CncViewer.ConfigEditor.ViewModels;
 using CVCEVML = CncViewer.ConfigEditor.ViewModels.Links;
+using CVCEVMI = CncViewer.ConfigEditor.ViewModels.Interfaces;
 using CVM = CncViewer.Models;
 using CVML = CncViewer.Models.Links;
 using CVME = CncViewer.Models.Enums;
@@ -46,10 +47,10 @@ namespace CncViewer.ConfigEditor.DataSource.File.Xml
             }
         }
 
-        public static CVML.Link ToModel(this CVCEVML.LinkViewModel vm)
+        public static CVML.Link ToModel(this CVCEVMI.ILinkViewModel vm)
         {
-            if (vm is CVCEVML.BinaryLinkViewModel bvm) return ToModel(bvm);
-            else if (vm is CVCEVML.LinearLinkViewModel lvm) return ToModel(lvm);
+            if (vm is CVCEVMI.IBinaryLinkViewModel bvm) return ToModel(bvm);
+            else if (vm is CVCEVMI.ILinearLinkViewModel lvm) return ToModel(lvm);
             else throw new NotImplementedException($"Conversion to model of {vm.GetType().FullName} is not implemented!");
         }
 
@@ -65,23 +66,23 @@ namespace CncViewer.ConfigEditor.DataSource.File.Xml
             return vm;
         }
 
-        public static CVCEVML.LinkViewModel ToViewModel(this CVML.Link link)
+        public static CVCEVMI.ILinkViewModel ToViewModel(this CVML.Link link)
         {
-            CVCEVML.LinkViewModel vm = null;
+            CVCEVMI.ILinkViewModel vm = null;
 
             switch (link.VariableType)
             {
                 case CVME.VariableType.Flag:
-                    vm = new CVCEVML.BinaryLinkViewModel(link.LinkId) { BinaryLinkTarget = CVCEVM.Enums.BinaryLinkTarget.Flag };
+                    vm = new CVCEVML.BinaryLinkViewModel(link.LinkId) { SelectableType = CVCEVM.Enums.BinaryLinkTarget.Flag };
                     break;
                 case CVME.VariableType.Out:
-                    vm = new CVCEVML.BinaryLinkViewModel(link.LinkId) { BinaryLinkTarget = CVCEVM.Enums.BinaryLinkTarget.Out };
+                    vm = new CVCEVML.BinaryLinkViewModel(link.LinkId) { SelectableType = CVCEVM.Enums.BinaryLinkTarget.Out };
                     break;
                 case CVME.VariableType.Word:
-                    vm = new CVCEVML.LinearLinkViewModel(link.LinkId) { Factor = (link as CVML.LinearLink).Factor, LinearTargetType = CVCEVM.Enums.LinearLinkTarget.Word };
+                    vm = new CVCEVML.LinearLinkViewModel(link.LinkId) { Factor = (link as CVML.LinearLink).Factor, SelectableType = CVCEVM.Enums.LinearLinkTarget.Word };
                     break;
                 case CVME.VariableType.DWord:
-                    vm = new CVCEVML.LinearLinkViewModel(link.LinkId) { Factor = (link as CVML.LinearLink).Factor, LinearTargetType = CVCEVM.Enums.LinearLinkTarget.DWord };
+                    vm = new CVCEVML.LinearLinkViewModel(link.LinkId) { Factor = (link as CVML.LinearLink).Factor, SelectableType = CVCEVM.Enums.LinearLinkTarget.DWord };
                     break;
                 default: throw new NotImplementedException($"Conversion to view model not implemented for {link.VariableType} link!");
             }
@@ -91,19 +92,19 @@ namespace CncViewer.ConfigEditor.DataSource.File.Xml
             return vm;
         }
 
-        public static CVML.Link ToModel(CVCEVML.BinaryLinkViewModel vm)
+        public static CVML.Link ToModel(CVCEVMI.IBinaryLinkViewModel vm)
         {
             CVML.Link link = null;
 
-            switch (vm.BinaryLinkTarget)
+            switch (vm.TargetType)
             {
-                case CVCEVM.Enums.BinaryLinkTarget.Out:
+                case CVCEVM.Enums.TargetType.Out:
                     link = new CVML.OutputLink() { VariableType = CVME.VariableType.Out };
                     break;
-                case CVCEVM.Enums.BinaryLinkTarget.Flag:
+                case CVCEVM.Enums.TargetType.Flag:
                     link = new CVML.FlagLink() { VariableType = CVME.VariableType.Flag };
                     break;
-                default: throw new NotImplementedException($"Binary link conversion of {vm.BinaryLinkTarget} is not implemented!");
+                default: throw new NotImplementedException($"Binary link conversion of {vm.TargetType} is not implemented!");
             }
 
             TransferProps(vm, link);
@@ -111,21 +112,21 @@ namespace CncViewer.ConfigEditor.DataSource.File.Xml
             return link;
         }
 
-        public static CVML.Link ToModel(CVCEVML.LinearLinkViewModel vm)
+        public static CVML.Link ToModel(CVCEVMI.ILinearLinkViewModel vm)
         {
-            bool idDWord = (vm.LinearTargetType == CVCEVM.Enums.LinearLinkTarget.DWord);
+            //bool idDWord = (vm.LinearTargetType == CVCEVM.Enums.LinearLinkTarget.DWord);
             CVML.LinearLink link = null;
 
-            switch (vm.LinearTargetType)
+            switch (vm.TargetType)
             {
-                case CVCEVM.Enums.LinearLinkTarget.Word:
+                case CVCEVM.Enums.TargetType.Word:
                     link = new CVML.WordLink() { VariableType = CVME.VariableType.Word, Factor = vm.Factor };
                     break;
-                case CVCEVM.Enums.LinearLinkTarget.DWord:
+                case CVCEVM.Enums.TargetType.DWord:
                     link = new CVML.DWordLink() { VariableType = CVME.VariableType.DWord, Factor = vm.Factor };
                     break;
                 default:
-                    throw new NotImplementedException($"Linear link conversion of {vm.LinearTargetType} not implemented!");
+                    throw new NotImplementedException($"Linear link conversion of {vm.TargetType} not implemented!");
             }
 
             TransferProps(vm, link);
@@ -133,14 +134,14 @@ namespace CncViewer.ConfigEditor.DataSource.File.Xml
             return link;
         }
 
-        public static void TransferProps(CVCEVML.LinkViewModel source, CVML.Link dest)
+        public static void TransferProps(CVCEVMI.ILinkViewModel source, CVML.Link dest)
         {
             dest.LinkId = source.LinkId;
             dest.Index = source.Index;
             dest.Description = source.Description;
         }
 
-        public static void TransferProps(CVML.Link source, CVCEVML.LinkViewModel dest)
+        public static void TransferProps(CVML.Link source, CVCEVMI.ILinkViewModel dest)
         {
             dest.Index = source.Index;
             dest.Description = source.Description;

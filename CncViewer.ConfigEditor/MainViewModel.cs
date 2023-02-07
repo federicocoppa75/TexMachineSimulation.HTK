@@ -14,6 +14,7 @@ using System.Windows.Input;
 using MVMIoc = Machine.ViewModels.Ioc;
 using VMUI = Machine.ViewModels.UI;
 using CVCEDSFX = CncViewer.ConfigEditor.DataSource.File.Xml;
+using CncViewer.ConfigEditor.ViewModels.Interfaces;
 
 namespace CncViewer.ConfigEditor
 {
@@ -21,11 +22,10 @@ namespace CncViewer.ConfigEditor
     {
         public VMUI.IOptionProvider DataSource => MVMIoc.SimpleIoc<VMUI.IOptionProvider>.GetInstance();
 
-        //public ObservableCollection<LinkViewModel> Links { get; private set; } = new ObservableCollection<LinkViewModel>();
-        public IList<LinkViewModel> Links { get; private set; } = new ObservableCollection<LinkViewModel>();
+        public IList<ILinkViewModel> Links { get; private set; } = new ObservableCollection<ILinkViewModel>();
 
-        private LinkViewModel _selectedLink;
-        public LinkViewModel SelectedLink
+        private ILinkViewModel _selectedLink;
+        public ILinkViewModel SelectedLink
         {
             get => _selectedLink; 
             set => Set(ref _selectedLink, value, nameof(SelectedLink));

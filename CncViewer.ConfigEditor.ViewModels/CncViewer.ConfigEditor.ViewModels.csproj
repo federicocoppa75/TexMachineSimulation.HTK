@@ -8,4 +8,8 @@
     <PackageReference Include="FC75.Machine.ViewModels.Base" Version="2.7.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Variables\" />
+  </ItemGroup>
+
 </Project>
