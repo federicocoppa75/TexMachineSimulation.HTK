@@ -10,12 +10,18 @@ using MVMIL = Machine.ViewModels.Interfaces.Links;
 using MVMIoc = Machine.ViewModels.Ioc;
 using MVMM = Machine.ViewModels.Messaging;
 using MVMML = Machine.ViewModels.Messages.Links;
-
+using CVCVMI = CncViewer.Connection.ViewModels.Inputs;
+using CncViewer.Connection.ViewModels.Inputs;
 
 namespace CncViewer.Connection.Bridge.Factories
 {
     public class VariableViewModelFacotry : IVariableViewModelFacotry
     {
+        public IVariable CreateBinaryInput(int index, string description, BinaryInputType type)
+        {
+            return new BinaryInputViewModel() { Index = index, Description = description, BinaryInputType = type, VariableType = VariableType.Flag };
+        }
+
         public IVariable Create(VariableType type, int index, int linkId, string description, double factor = 0)
         {
             switch (type)

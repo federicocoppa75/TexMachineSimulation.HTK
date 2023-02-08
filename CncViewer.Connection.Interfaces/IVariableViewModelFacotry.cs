@@ -9,5 +9,6 @@ namespace CncViewer.Connection.Interfaces
     public interface IVariableViewModelFacotry
     {
         IVariable Create(VariableType type, int index, int linkId, string description, double factor = 0);
+        IVariable CreateBinaryInput(int index, string description, BinaryInputType type);
     }
 }

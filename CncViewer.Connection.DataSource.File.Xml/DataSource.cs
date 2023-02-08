@@ -47,6 +47,11 @@ namespace CncViewer.Connection.DataSource.File.Xml
             {
                 variables.Add(link.ToVariable());
             }
+
+            foreach (var input in data.Inputs)
+            {
+                variables.Add(input.ToVariable());
+            }
         }
 
         private static CVM.ConnectionData LoadConfiguration(string fileName)
