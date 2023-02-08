@@ -13,6 +13,7 @@
                 <MenuItem Header="Data">
                     <MenuItem Header="Open" Command="{Binding CfgDataSource.OpenCommand}"/>
                     <MenuItem Header="Save" Command="{Binding CfgDataSource.SaveCommand}"/>
+                    <MenuItem Header="Close" Command="{Binding CloseCommand}"/>
                     <Separator/>
                     <MenuItem Header="Source" ItemsSource="{Binding DataSource.Options}">
                         <MenuItem.ItemContainerStyle>

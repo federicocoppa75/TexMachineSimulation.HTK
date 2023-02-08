@@ -62,11 +62,20 @@ namespace CncViewer.ConfigEditor
         private CVCEDSFX.DataSource _cfgDataSource;
         public CVCEDSFX.DataSource CfgDataSource => _cfgDataSource ?? (_cfgDataSource = new CVCEDSFX.DataSource(this));
 
+        private ICommand _closeCommand;
+        public ICommand CloseCommand => _closeCommand?? (_closeCommand = new RelayCommand(() => CloseCommandImpl()));
+
         private ICommand _addInputCommand;
         public ICommand AddInputCommand => _addInputCommand ?? (_addInputCommand = new RelayCommand(() => AddCommandImpl()));
 
         private ICommand _removeInputCommand;
         private ICommand RemoveInputCommand => _removeInputCommand ?? (_removeInputCommand = new RelayCommand(() => RemoveInputCommandImpl(), () => _selectedInput != null));
+
+        private void CloseCommandImpl()
+        {
+            Inputs.Clear();
+            Links.Clear();
+        }
 
         private void RemoveInputCommandImpl()
         {
