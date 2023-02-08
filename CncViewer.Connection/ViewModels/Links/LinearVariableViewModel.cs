@@ -6,7 +6,7 @@ using MVMIL = Machine.ViewModels.Interfaces.Links;
 
 namespace CncViewer.Connection.ViewModels.Links
 {
-    public class LinearLinkViewModel : VariableViewModel<int, MVMIL.ILinearLinkViewModel>
+    public class LinearLinkViewModel : LinkViewModel<int, MVMIL.ILinearLinkViewModel>
     {
         public double Factor { get; set; }
 

@@ -6,7 +6,7 @@ using MVMIL = Machine.ViewModels.Interfaces.Links;
 
 namespace CncViewer.Connection.ViewModels.Links
 {
-    public class FixedPointVariableViewModel : VariableViewModel<float, MVMIL.ILinearLinkViewModel>
+    public class FixedPointVariableViewModel : LinkViewModel<float, MVMIL.ILinearLinkViewModel>
     {
         public double Factor { get; set; }
 

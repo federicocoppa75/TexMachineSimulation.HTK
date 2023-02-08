@@ -87,7 +87,7 @@ namespace CncViewer.ConfigEditor
 
         private void AddCommandImpl()
         {
-            var obj = new BinaryInputViewModel();
+            var obj = new BinaryInputViewModel() { SelectableType = ViewModels.Enums.BinaryLinkTarget.Flag };
 
             Inputs.Add(obj);
             SelectedInput= obj;

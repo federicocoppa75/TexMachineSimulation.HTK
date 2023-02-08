@@ -3,11 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CncViewer.Connection.Interfaces.Links
+namespace CncViewer.Connection.Interfaces
 {
     public interface IVariable
     {
-        int LinkId { get; }
         VariableType VariableType { get; }
         int Index { get; }
         string Description { get; }
@@ -19,4 +18,5 @@ namespace CncViewer.Connection.Interfaces.Links
     {
         T Value { get; set; }
     }
+
 }

@@ -1,4 +1,4 @@
-﻿using CncViewer.Connection.Interfaces.Links;
+﻿using CncViewer.Connection.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;

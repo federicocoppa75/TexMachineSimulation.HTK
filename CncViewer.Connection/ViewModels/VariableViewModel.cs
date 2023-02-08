@@ -1,20 +1,17 @@
-﻿using CncViewer.Connection.Interfaces.Enums;
-using CncViewer.Connection.Interfaces.Links;
+﻿using CncViewer.Connection.Interfaces;
+using CncViewer.Connection.Interfaces.Enums;
 using Machine.ViewModels.Base;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using MVMIL = Machine.ViewModels.Interfaces.Links;
 
-namespace CncViewer.Connection.ViewModels.Links
+namespace CncViewer.Connection.ViewModels
 {
     public abstract class VariableViewModel : BaseViewModel, IVariable
     {
-        public int LinkId { get; set; }
         public VariableType VariableType { get; set; }
         public int Index { get; set; }
         public string Description { get; set; }
-        public abstract MVMIL.ILinkViewModel Link { get; set; }
 
         public abstract void SetValue<V>(V value);
     }
@@ -36,7 +33,7 @@ namespace CncViewer.Connection.ViewModels.Links
 
         public override void SetValue<V>(V value)
         {
-            if(typeof(T).IsAssignableFrom(typeof(V)))
+            if (typeof(T).IsAssignableFrom(typeof(V)))
             {
                 (this as VariableViewModel<V>).Value = value;
             }
@@ -53,27 +50,4 @@ namespace CncViewer.Connection.ViewModels.Links
         protected abstract void OnValueChanged();
     }
 
-    public abstract class VariableViewModel<T, TLink> : VariableViewModel<T> where TLink : class, MVMIL.ILinkViewModel
-    {
-        protected TLink _link;
-        public override MVMIL.ILinkViewModel Link
-        {
-            get => _link;
-            set
-            {
-                if (value == null)
-                {
-                    _link = null;
-                }
-                else if (value is TLink v)
-                {
-                    Set(ref _link, v, nameof(Link));
-                }
-                else
-                {
-                    throw new InvalidOperationException($"You can not couple {typeof(T).Name} with {typeof(TLink).Name}!");
-                }
-            }
-        }
-    }
 }

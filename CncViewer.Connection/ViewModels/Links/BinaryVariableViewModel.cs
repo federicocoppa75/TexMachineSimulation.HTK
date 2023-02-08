@@ -5,7 +5,7 @@ using MVMIL = Machine.ViewModels.Interfaces.Links;
 
 namespace CncViewer.Connection.ViewModels.Links
 {
-    public class BinaryVariableViewModel : VariableViewModel<bool, MVMIL.IPneumaticLinkViewModel>
+    public class BinaryVariableViewModel : LinkViewModel<bool, MVMIL.IPneumaticLinkViewModel>
     {
         protected override void OnValueChanged()
         {
