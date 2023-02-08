@@ -4,19 +4,77 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CncViewer.Connection.Views"
+             xmlns:selectors="clr-namespace:CncViewer.Connection.Views.Selectors"
+             xmlns:beh="clr-namespace:CncViewer.Connection.Views.Behaviours"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <selectors:BinaryRequestValueTemplateSelector x:Key="binaryRequestValueTemplateSelector">
+            <selectors:BinaryRequestValueTemplateSelectorItem When="Flag">
+                <DataTemplate>
+                    <CheckBox IsChecked="{Binding RequestValue, Mode=TwoWay}" HorizontalAlignment="Center" />
+                </DataTemplate>
+            </selectors:BinaryRequestValueTemplateSelectorItem>
+            <selectors:BinaryRequestValueTemplateSelectorItem When="Pulse">
+                <DataTemplate>
+                    <Label Content="Pulse" 
+                           Background="LightGray" 
+                           BorderBrush="DimGray" 
+                           BorderThickness="2" 
+                           beh:MouseHelpers.MouseLeftButtonDown="{Binding SetValueCommand}"
+                           beh:MouseHelpers.MouseLeftButtonUp="{Binding ResetValueCommand}" />
+                </DataTemplate>
+            </selectors:BinaryRequestValueTemplateSelectorItem>
+        </selectors:BinaryRequestValueTemplateSelector>
+    </UserControl.Resources>
     <Grid>
-        <ListView ItemsSource="{Binding Variables}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Id" Width="50" DisplayMemberBinding="{Binding LinkId}" />
-                    <GridViewColumn Header="Type" Width="50" DisplayMemberBinding="{Binding VariableType}" />
-                    <GridViewColumn Header="Index" Width="50" DisplayMemberBinding="{Binding Index}" />
-                    <GridViewColumn Header="Value" Width="80" DisplayMemberBinding="{Binding Value}" />
-                    <GridViewColumn Header="Description" Width="100" DisplayMemberBinding="{Binding Description}" />
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="4"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Content="Links" FontWeight="Bold"/>
+            <ListView Grid.Row="1" ItemsSource="{Binding Links}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Id" Width="50" DisplayMemberBinding="{Binding LinkId}" />
+                        <GridViewColumn Header="Type" Width="50" DisplayMemberBinding="{Binding VariableType}" />
+                        <GridViewColumn Header="Index" Width="50" DisplayMemberBinding="{Binding Index}" />
+                        <GridViewColumn Header="Value" Width="80" DisplayMemberBinding="{Binding Value}" />
+                        <GridViewColumn Header="Description" Width="100" DisplayMemberBinding="{Binding Description}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+
+        <GridSplitter Grid.Row="1"
+                    ResizeDirection="Rows"
+                    ResizeBehavior="PreviousAndNext"
+                    HorizontalAlignment="Stretch"/>
+
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Content="Inputs" FontWeight="Bold"/>
+            <ListView Grid.Row="1" ItemsSource="{Binding Inputs}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Type" Width="50" DisplayMemberBinding="{Binding VariableType}" />
+                        <GridViewColumn Header="Index" Width="50" DisplayMemberBinding="{Binding Index}" />
+                        <GridViewColumn Header="Value" Width="80" DisplayMemberBinding="{Binding Value}" />
+                        <GridViewColumn Header="Request" Width="60" CellTemplateSelector="{DynamicResource binaryRequestValueTemplateSelector}" />
+                        <GridViewColumn Header="Description" Width="100" DisplayMemberBinding="{Binding Description}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
     </Grid>
 </UserControl>

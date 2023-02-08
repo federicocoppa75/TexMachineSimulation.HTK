@@ -15,6 +15,7 @@ using CncViewer.Connection.Interfaces.Links;
 using System.Threading;
 using System.Threading.Tasks;
 using MVMUI = Machine.ViewModels.UI;
+using CncViewer.Connection.Interfaces.Inputs;
 
 namespace CncViewer.Connection.Bridge
 {
@@ -117,6 +118,7 @@ namespace CncViewer.Connection.Bridge
                         _firstRead = false;
                         _lastReadTime = e;
                         ReadVariables();
+                        WriteVariables();
                     }
                     else
                     {
@@ -126,6 +128,7 @@ namespace CncViewer.Connection.Bridge
                         {
                             _lastReadTime = e;
                             ReadVariables();
+                            WriteVariables();
                         }
                     }
 
@@ -162,6 +165,32 @@ namespace CncViewer.Connection.Bridge
                     break;
                 default:
                     throw new NotImplementedException($"Read variable for type {variable.VariableType} not implemented!");
+            }
+        }
+
+        protected virtual void WriteVariables() 
+        {
+            while(!_variableToWrite.IsEmpty)
+            {
+                if(_variableToWrite.TryTake(out var variable)) 
+                {
+                    Write(variable);
+                }
+            }
+        }
+
+        private void Write(IVariable variable) 
+        { 
+            switch (variable.VariableType)
+            {
+                case Interfaces.Enums.VariableType.Flag:
+                    ConnectionHelper.SetBitF(_controller, GTC.SubSystem.PLC, variable.Index, (variable as IInput<bool>).RequestValue);
+                    break;
+                case Interfaces.Enums.VariableType.Out:
+                case Interfaces.Enums.VariableType.Word:
+                case Interfaces.Enums.VariableType.DWord:
+                default:
+                    throw new NotImplementedException($"Write variable for type {variable.VariableType} not implemented!");
             }
         }
     }

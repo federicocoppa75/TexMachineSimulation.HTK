@@ -10,5 +10,6 @@ namespace CncViewer.Connection.Interfaces.Inputs
 
     public interface IInput<T> : IInput, IVariable<T> 
     {
+        T RequestValue { get; }
     }
 }

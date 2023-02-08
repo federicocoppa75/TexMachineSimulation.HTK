@@ -26,5 +26,15 @@ namespace CncViewer.Connection.Views
             InitializeComponent();
             DataContext = new VariablesViewModel();
         }
+
+        private void Button_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void Button_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }

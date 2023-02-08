@@ -172,7 +172,7 @@ namespace CncViewer.Connection.Bridge
         {
             IVolatileBitVariableService var = (IVolatileBitVariableService)controller.GetControllerService(typeof(IVolatileBitVariableService));
 
-            var.Write(env, index, value);
+            var.Write(/*env,*/ index, value);
         }
 
         public static bool GetBitO(IController controller, SubSystem env, int index)
