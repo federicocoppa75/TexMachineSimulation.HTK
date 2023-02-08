@@ -28,7 +28,11 @@
                     <MenuItem Header="Unload Machine" Command="{Binding Kernel.UnloadAllMachineCommand}" />
                     <Separator/>
                     <MenuItem Header="Load Environment" Command="{Binding DataSource.Value.LoadEnvironmentCommand}" ToolTip="Load machine to get links to join cnc variables"/>
-                </MenuItem>                
+                </MenuItem>
+                <MenuItem Header="Variables">
+                    <MenuItem Header="Add input" Command="{Binding AddInputCommand}"/>
+                    <MenuItem Header="Remove input" Command="{Binding RemoveInputCommand}"/>
+                </MenuItem>
             </Menu>
 
             <Grid>
@@ -37,17 +41,32 @@
                     <ColumnDefinition Width="4" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                
-                <ListView ItemsSource="{Binding Links}" SelectedItem="{Binding SelectedLink}">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="Id" Width="50" DisplayMemberBinding="{Binding LinkId}" />
-                            <GridViewColumn Header="Type" Width="60" DisplayMemberBinding="{Binding TargetType}" />
-                            <GridViewColumn Header="Index" Width="100" DisplayMemberBinding="{Binding Index}" />
-                            <GridViewColumn Header="Description" Width="100" DisplayMemberBinding="{Binding Description}" />
-                        </GridView>
-                    </ListView.View>
-                </ListView>
+
+                <TabControl>
+                    <TabItem Header="Links">
+                        <ListView ItemsSource="{Binding Links}" SelectedItem="{Binding SelectedLink}">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Id" Width="50" DisplayMemberBinding="{Binding LinkId}" />
+                                    <GridViewColumn Header="Type" Width="60" DisplayMemberBinding="{Binding TargetType}" />
+                                    <GridViewColumn Header="Index" Width="100" DisplayMemberBinding="{Binding Index}" />
+                                    <GridViewColumn Header="Description" Width="100" DisplayMemberBinding="{Binding Description}" />
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </TabItem>
+                    <TabItem Header="Inputs">
+                        <ListView ItemsSource="{Binding Inputs}" SelectedItem="{Binding SelectedInput}">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Type" Width="60" DisplayMemberBinding="{Binding TargetType}" />
+                                    <GridViewColumn Header="Index" Width="100" DisplayMemberBinding="{Binding Index}" />
+                                    <GridViewColumn Header="Description" Width="100" DisplayMemberBinding="{Binding Description}" />
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </TabItem>
+                </TabControl>
 
                 <GridSplitter Grid.Column="1"
                           ResizeDirection="Columns"
@@ -61,7 +80,7 @@
                            ShowSortOptions="False"
                            ShowTitle="False"
                            ShowSummary="False"
-                           SelectedObject="{Binding SelectedLink}"/>
+                           SelectedObject="{Binding SelectedObject}"/>
             </Grid>
         </DockPanel>
     </Grid>

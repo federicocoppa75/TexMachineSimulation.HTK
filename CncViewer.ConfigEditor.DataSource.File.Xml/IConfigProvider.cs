@@ -8,5 +8,6 @@ namespace CncViewer.ConfigEditor.DataSource.File.Xml
     public interface IConfigProvider
     {
         IList<ILinkViewModel> Links { get; }
+        IList<IInputViewModel> Inputs { get; }
     }
 }

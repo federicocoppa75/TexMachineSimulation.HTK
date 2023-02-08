@@ -8,6 +8,8 @@ using CVM = CncViewer.Models;
 using CVML = CncViewer.Models.Links;
 using CVME = CncViewer.Models.Enums;
 using System.Threading;
+using CVMI = CncViewer.Models.Inputs;
+using CncViewer.ConfigEditor.ViewModels.Inputs;
 
 namespace CncViewer.ConfigEditor.DataSource.File.Xml
 {
@@ -22,6 +24,11 @@ namespace CncViewer.ConfigEditor.DataSource.File.Xml
                 data.Links.Add(link.ToModel());
             }
 
+            foreach (var input in vm.Inputs)
+            {
+                data.Inputs.Add(input.ToModel());
+            }
+
             return data;
         }
 
@@ -34,17 +41,34 @@ namespace CncViewer.ConfigEditor.DataSource.File.Xml
                 data.Links.Add(link.ToModel());
             }
 
+            foreach (var input in configProvider.Inputs)
+            {
+                data.Inputs.Add(input.ToModel());
+            }
+
             return data;
         }
 
         public static void LoadViewModels(this IConfigProvider configProvider, CVM.ConnectionData source)
         {
             configProvider.Links.Clear();
+            configProvider.Inputs.Clear();
 
             foreach (var link in source.Links)
             {
                 configProvider.Links.Add(link.ToViewModel());
             }
+
+            foreach (var input in source.Inputs)
+            {
+                configProvider.Inputs.Add(input.ToViewModel());
+            }
+        }
+
+        public static CVMI.Input ToModel(this CVCEVMI.IInputViewModel vm)
+        {
+            if (vm is CVCEVMI.IBinaryInputViewModel bvm) return ToModel(bvm);
+            else throw new NotImplementedException($"Conversion to model of {vm.GetType().FullName} is not implemented!");
         }
 
         public static CVML.Link ToModel(this CVCEVMI.ILinkViewModel vm)
@@ -61,6 +85,36 @@ namespace CncViewer.ConfigEditor.DataSource.File.Xml
             foreach (var item in data.Links)
             {
                 vm.Links.Add(item.ToViewModel());
+            }
+
+            return vm;
+        }
+
+        public static CVCEVMI.IInputViewModel ToViewModel(this CVMI.Input input)
+        {
+            if (input is CVMI.BinaryInput bi) return ToViewModel(bi);
+            else throw new NotImplementedException($"Conversion to view model not implemented for {input.VariableType} input!");
+        }
+
+        private static CVCEVMI.IInputViewModel ToViewModel(this CVMI.BinaryInput input)
+        {
+            var vm = new BinaryInputViewModel()
+            {
+                Index = input.Index,
+                Description= input.Description,
+                SelectableType = CVCEVM.Enums.BinaryLinkTarget.Flag,
+            };
+
+            switch (input.BinaryInputType)
+            {
+                case CVME.BinaryInputType.Pulse:
+                    vm.BinaryInputType = CVCEVM.Enums.BinaryInputType.Pulse;
+                    break;
+                case CVME.BinaryInputType.Flag:
+                    vm.BinaryInputType = CVCEVM.Enums.BinaryInputType.Flag;
+                    break;
+                default:
+                    throw new NotImplementedException($"Conversion to view model not implemented for {nameof(BinaryInputViewModel)}({input.BinaryInputType}) input type!");
             }
 
             return vm;
@@ -90,6 +144,30 @@ namespace CncViewer.ConfigEditor.DataSource.File.Xml
             TransferProps(link, vm);
 
             return vm;
+        }
+
+        public static CVMI.Input ToModel(CVCEVMI.IBinaryInputViewModel vm)
+        {
+            var m =  new CVMI.BinaryInput()
+            {
+                VariableType = CVME.VariableType.Flag,
+                Index= vm.Index,
+                Description= vm.Description,
+            };
+
+            switch (vm.BinaryInputType)
+            {
+                case CVCEVM.Enums.BinaryInputType.Pulse:
+                    m.BinaryInputType = CVME.BinaryInputType.Pulse;
+                    break;
+                case CVCEVM.Enums.BinaryInputType.Flag:
+                    m.BinaryInputType= CVME.BinaryInputType.Flag;
+                    break;
+                default:
+                    break;
+            }
+
+            return m;
         }
 
         public static CVML.Link ToModel(CVCEVMI.IBinaryLinkViewModel vm)
