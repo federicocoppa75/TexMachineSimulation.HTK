@@ -17,7 +17,8 @@
             </selectors:BinaryRequestValueTemplateSelectorItem>
             <selectors:BinaryRequestValueTemplateSelectorItem When="Pulse">
                 <DataTemplate>
-                    <Label Content="Pulse" 
+                    <Label Content="~" 
+                           FontFamily="Webdings"
                            Background="LightGray" 
                            BorderBrush="DimGray" 
                            BorderThickness="2" 
