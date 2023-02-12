@@ -162,6 +162,7 @@
                 </MenuItem>
                 <MenuItem Header="Connection">
                     <MenuItem Header="Open Variables" Command="{Binding ConnectionDataSource.OpenCommand}"/>
+                    <MenuItem Header="Unload variables" Command="{Binding ConnectionManager.UnloadVariablesCommand}" />
                     <Separator/>
                     <MenuItem Header="Connect" Command="{Binding ConnectionManager.ConnectCommand}"/>
                     <MenuItem Header="Disconnect" Command="{Binding ConnectionManager.DisconnectCommand}"/>

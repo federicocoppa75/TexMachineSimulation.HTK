@@ -11,5 +11,6 @@ namespace CncViewer.Connection.Interfaces
         string IpAddress { get; set; }
         ICommand ConnectCommand { get; }
         ICommand DisconnectCommand { get; }
+        ICommand UnloadVariablesCommand { get; }
     }
 }

@@ -32,11 +32,20 @@ namespace CncViewer.Connection.Bridge
         public string IpAddress { get; set; } = "192.168.0.200";
         public bool IsConnected => _controller != null && _controller.IsConnect;
 
+        private ICommand _unloadVariablesCommand;
+        public ICommand UnloadVariablesCommand => _unloadVariablesCommand ?? (_unloadVariablesCommand = new RelayCommand(() => UnloadVariablesCommandImpl(), () => (Variables.Count > 0 && !IsConnected)));
+
         private ICommand _connectCommand;
         public ICommand ConnectCommand => _connectCommand ?? (_connectCommand = new RelayCommand(() => ConnectCommandImpl(), () => (Variables.Count > 0 && !IsConnected)));
 
         private ICommand _disconnectCommand;
         public ICommand DisconnectCommand => _disconnectCommand ?? (_disconnectCommand = new RelayCommand(() => DisconnectCommandImpl(), () => (IsConnected && !_stopRequested)));
+
+        private void UnloadVariablesCommandImpl()
+        {
+            Variables.Clear();
+            _variableToWrite.Clear();
+        }
 
         private void ConnectCommandImpl()
         {
@@ -82,6 +91,7 @@ namespace CncViewer.Connection.Bridge
             {
                 (_connectCommand as RelayCommand).RaiseCanExecuteChanged();
                 (_disconnectCommand as RelayCommand).RaiseCanExecuteChanged();
+                (_unloadVariablesCommand as RelayCommand).RaiseCanExecuteChanged();
             });
         }
 

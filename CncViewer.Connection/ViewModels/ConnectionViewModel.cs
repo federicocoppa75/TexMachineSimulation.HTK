@@ -2,10 +2,12 @@
 using CncViewer.Connection.Interfaces.Links;
 using CncViewer.Connection.Messages;
 using Machine.ViewModels.Base;
+using Machine.ViewModels.Interfaces;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Text;
 
 namespace CncViewer.Connection.ViewModels
@@ -26,6 +28,14 @@ namespace CncViewer.Connection.ViewModels
             Variables = collection;
 
             Messenger.Register<AddVariableToWriteMessage>(this, OnAddVariableToWriteMessage);
+
+            (GetInstance<IKernelViewModel>().Machines as INotifyCollectionChanged).CollectionChanged += OnMachineCollectionChanged;
+        }
+
+        private void OnMachineCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            Variables.Clear();
+            _variableToWrite.Clear();
         }
 
         private void OnAddVariableToWriteMessage(AddVariableToWriteMessage msg)
