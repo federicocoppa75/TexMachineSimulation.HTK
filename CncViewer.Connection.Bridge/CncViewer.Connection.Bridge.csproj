@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FC75.Machine.ViewModels.Messages" Version="2.7.0" />
-    <PackageReference Include="FC75.Machine.ViewModels.UI" Version="2.7.0" />
+    <PackageReference Include="FC75.Machine.ViewModels.Messages" Version="2.8.0" />
+    <PackageReference Include="FC75.Machine.ViewModels.UI" Version="2.8.0" />
   </ItemGroup>
 
   <ItemGroup>
