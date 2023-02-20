@@ -5,7 +5,6 @@ using System.Text;
 using System.Windows.Input;
 using MVMIoc = Machine.ViewModels.Ioc;
 using CVM = CncViewer.Models;
-using CncViewer.Models;
 using CVCI = CncViewer.Connection.Interfaces;
 using Machine.ViewModels.UI;
 using MVMUIDSF = Machine.ViewModels.UI.DataSource.File;
@@ -70,7 +69,7 @@ namespace CncViewer.Connection.DataSource.File.Xml
             _lastVariableFile = fileName;
         }
 
-        private void DeployVariable(ConnectionData data)
+        private void DeployVariable(CVM.ConnectionData data)
         {
             var variables = MVMIoc.SimpleIoc<CVCI.IConnectionData>.GetInstance().Variables;
 
