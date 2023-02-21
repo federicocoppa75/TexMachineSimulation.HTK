@@ -127,8 +127,7 @@ namespace CncViewer.Connection.Bridge
                     {
                         _firstRead = false;
                         _lastReadTime = e;
-                        ReadVariables();
-                        WriteVariables();
+                        ReadWriteVariables();
                     }
                     else
                     {
@@ -137,8 +136,7 @@ namespace CncViewer.Connection.Bridge
                         if (dt.TotalMilliseconds >= SampleTime)
                         {
                             _lastReadTime = e;
-                            ReadVariables();
-                            WriteVariables();
+                            ReadWriteVariables();
                         }
                     }
 
@@ -149,16 +147,37 @@ namespace CncViewer.Connection.Bridge
             }
         }
 
-        protected virtual void ReadVariables()
+        protected bool ReadWriteVariables()
         {
-            foreach (var variable in Variables)
+            if(ReadVariables() && WriteVariables())
             {
-                if (variable.Index >= 0) Read(variable);
+                return true;
+            }
+            else
+            {
+                _controller = null;
+                UpdateCommands();
+                return false;
             }
         }
 
-        private void Read(IVariable variable)
+        protected virtual bool ReadVariables()
         {
+            foreach (var variable in Variables)
+            {
+                if (variable.Index >= 0)
+                {
+                    if(!Read(variable)) return false;
+                }
+            }
+
+            return true;
+        }
+
+        private bool Read(IVariable variable)
+        {
+            if (!CheckConnection()) return false;
+
             switch (variable.VariableType)
             {
                 case Interfaces.Enums.VariableType.Flag:
@@ -176,21 +195,27 @@ namespace CncViewer.Connection.Bridge
                 default:
                     throw new NotImplementedException($"Read variable for type {variable.VariableType} not implemented!");
             }
+
+            return true;
         }
 
-        protected virtual void WriteVariables() 
+        protected virtual bool WriteVariables() 
         {
             while(!_variableToWrite.IsEmpty)
             {
                 if(_variableToWrite.TryTake(out var variable)) 
                 {
-                    Write(variable);
+                    if(!Write(variable)) return false;
                 }
             }
+
+            return true;
         }
 
-        private void Write(IVariable variable) 
-        { 
+        private bool Write(IVariable variable) 
+        {
+            if (!CheckConnection()) return false;
+
             switch (variable.VariableType)
             {
                 case Interfaces.Enums.VariableType.Flag:
@@ -202,6 +227,10 @@ namespace CncViewer.Connection.Bridge
                 default:
                     throw new NotImplementedException($"Write variable for type {variable.VariableType} not implemented!");
             }
+
+            return true;
         }
+
+        protected bool CheckConnection() =>  (_controller != null) && _controller.IsConnect;
     }
 }

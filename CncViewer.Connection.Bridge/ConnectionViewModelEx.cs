@@ -19,13 +19,16 @@ namespace CncViewer.Connection.Bridge
         private IFixedPointVariableService _vService;
 
 
-        protected override void ReadVariables()
+        protected override bool ReadVariables()
         {
+            if (!CheckConnection()) return false;
             if (!_initialized) InitVarriablesSet();
 
             _outSet.Read(_oService);
             _flagSet.Read(_fService);
             _fixPntSet.Read(_vService);
+
+            return true;
         }
 
         private void InitVarriablesSet()
