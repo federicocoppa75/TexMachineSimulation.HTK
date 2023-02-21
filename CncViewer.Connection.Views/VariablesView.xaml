@@ -11,6 +11,12 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <converters:BoolToCharConverter x:Key="boolToCharConverter" ValueForFalse="" ValueForTrue="" />
+        <converters:VariableTypeToStringConverter x:Key="variableTypeToStringConverter" >
+            <converters:VariableTypeToStringConverterItem When="DWord" Then="DW"/>
+            <converters:VariableTypeToStringConverterItem When="Word" Then="W"/>
+            <converters:VariableTypeToStringConverterItem When="Out" Then="O"/>
+            <converters:VariableTypeToStringConverterItem When="Flag" Then="F"/>
+        </converters:VariableTypeToStringConverter>
         <selectors:BinaryRequestValueTemplateSelector x:Key="binaryRequestValueTemplateSelector">
             <selectors:BinaryRequestValueTemplateSelectorItem When="Flag">
                 <DataTemplate>
@@ -61,7 +67,7 @@
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Id" Width="50" DisplayMemberBinding="{Binding LinkId}" />
-                        <GridViewColumn Header="Type" Width="50" DisplayMemberBinding="{Binding VariableType}" />
+                        <GridViewColumn Header="Type" Width="35" DisplayMemberBinding="{Binding VariableType, Converter={StaticResource variableTypeToStringConverter}}" />
                         <GridViewColumn Header="Index" Width="50" DisplayMemberBinding="{Binding Index}" />
                         <GridViewColumn Header="Value" Width="80" CellTemplateSelector="{DynamicResource variableValueTemplateSelector}"/>
                         <GridViewColumn Header="Description" Width="100" DisplayMemberBinding="{Binding Description}" />
@@ -84,7 +90,7 @@
             <ListView Grid.Row="1" ItemsSource="{Binding Inputs}">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Type" Width="50" DisplayMemberBinding="{Binding VariableType}" />
+                        <GridViewColumn Header="Type" Width="35" DisplayMemberBinding="{Binding VariableType, Converter={StaticResource variableTypeToStringConverter}}" />
                         <GridViewColumn Header="Index" Width="50" DisplayMemberBinding="{Binding Index}" />
                         <GridViewColumn Header="Value" Width="80" CellTemplate="{DynamicResource boolValueDataTemplate}" />
                         <GridViewColumn Header="Request" Width="60" CellTemplateSelector="{DynamicResource binaryRequestValueTemplateSelector}" />
