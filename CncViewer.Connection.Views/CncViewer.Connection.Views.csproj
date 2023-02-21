@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <PackageReference Include="FC75.Machine.ViewModels.Base" Version="2.8.0" />
+    <PackageReference Include="FC75.Machine.Views.Converters" Version="2.8.0" />
   </ItemGroup>
 
   <ItemGroup>

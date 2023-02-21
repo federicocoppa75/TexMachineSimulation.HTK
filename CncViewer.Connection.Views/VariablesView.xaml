@@ -6,9 +6,11 @@
              xmlns:local="clr-namespace:CncViewer.Connection.Views"
              xmlns:selectors="clr-namespace:CncViewer.Connection.Views.Selectors"
              xmlns:beh="clr-namespace:CncViewer.Connection.Views.Behaviours"
+             xmlns:converters="clr-namespace:CncViewer.Connection.Views.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
+        <converters:BoolToCharConverter x:Key="boolToCharConverter" ValueForFalse="" ValueForTrue="" />
         <selectors:BinaryRequestValueTemplateSelector x:Key="binaryRequestValueTemplateSelector">
             <selectors:BinaryRequestValueTemplateSelectorItem When="Flag">
                 <DataTemplate>
@@ -22,11 +24,25 @@
                            Background="LightGray" 
                            BorderBrush="DimGray" 
                            BorderThickness="2" 
+                           Padding="2,0,2,0"
+                           Margin="0"
                            beh:MouseHelpers.MouseLeftButtonDown="{Binding SetValueCommand}"
                            beh:MouseHelpers.MouseLeftButtonUp="{Binding ResetValueCommand}" />
                 </DataTemplate>
             </selectors:BinaryRequestValueTemplateSelectorItem>
         </selectors:BinaryRequestValueTemplateSelector>
+        <DataTemplate x:Key="boolValueDataTemplate">
+            <Label Content="{Binding Value, Converter={StaticResource boolToCharConverter}}" Margin="0" FontFamily="Webdings" />
+        </DataTemplate>
+        <DataTemplate x:Key="numericValueDataTemplate">
+            <Label Content="{Binding Value}" Margin="0"/>
+        </DataTemplate>
+        <selectors:VariableValueTemplateSelector x:Key="variableValueTemplateSelector">
+            <selectors:VariableValueTemplateSelectorItem When="DWord" Then="{StaticResource ResourceKey=numericValueDataTemplate}"/>
+            <selectors:VariableValueTemplateSelectorItem When="Word" Then="{StaticResource ResourceKey=numericValueDataTemplate}"/>
+            <selectors:VariableValueTemplateSelectorItem When="Out" Then="{StaticResource ResourceKey=boolValueDataTemplate}"/>
+            <selectors:VariableValueTemplateSelectorItem When="Flag" Then="{StaticResource ResourceKey=boolValueDataTemplate}"/>
+        </selectors:VariableValueTemplateSelector>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -47,7 +63,7 @@
                         <GridViewColumn Header="Id" Width="50" DisplayMemberBinding="{Binding LinkId}" />
                         <GridViewColumn Header="Type" Width="50" DisplayMemberBinding="{Binding VariableType}" />
                         <GridViewColumn Header="Index" Width="50" DisplayMemberBinding="{Binding Index}" />
-                        <GridViewColumn Header="Value" Width="80" DisplayMemberBinding="{Binding Value}" />
+                        <GridViewColumn Header="Value" Width="80" CellTemplateSelector="{DynamicResource variableValueTemplateSelector}"/>
                         <GridViewColumn Header="Description" Width="100" DisplayMemberBinding="{Binding Description}" />
                     </GridView>
                 </ListView.View>
@@ -70,7 +86,7 @@
                     <GridView>
                         <GridViewColumn Header="Type" Width="50" DisplayMemberBinding="{Binding VariableType}" />
                         <GridViewColumn Header="Index" Width="50" DisplayMemberBinding="{Binding Index}" />
-                        <GridViewColumn Header="Value" Width="80" DisplayMemberBinding="{Binding Value}" />
+                        <GridViewColumn Header="Value" Width="80" CellTemplate="{DynamicResource boolValueDataTemplate}" />
                         <GridViewColumn Header="Request" Width="60" CellTemplateSelector="{DynamicResource binaryRequestValueTemplateSelector}" />
                         <GridViewColumn Header="Description" Width="100" DisplayMemberBinding="{Binding Description}" />
                     </GridView>
